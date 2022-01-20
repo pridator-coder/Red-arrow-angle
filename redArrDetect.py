@@ -60,16 +60,16 @@ def getContours(img):
                 cv2.rectangle(imgResult, (x, y), (x + w, y + h), (0, 255, 0), 2)
                 # if objCor == 7:
                     # if len(approx[0])==2:
-                        x1, y1 = approx[0][0]
-                        x2, y2 = approx[3][0]
-                        x3, y3 = approx[4][0]
-                        x4 = ((x2 + x3)/2)
-                        y4 = ((y2 + y3)/2)
-                        print(x1, y1, x4, y4)
-                        gradient = getGradient(x1, y1, x4, y4)
-                        angle = getAngle(gradient)
+                x1, y1 = approx[0][0]
+                x2, y2 = approx[3][0]
+                x3, y3 = approx[4][0]
+                x4 = ((x2 + x3)/2)
+                y4 = ((y2 + y3)/2)
+                print(x1, y1, x4, y4)
+                gradient = getGradient(x1, y1, x4, y4)
+                angle = getAngle(gradient)
 
-                        cv2.putText(imgResult, str(angle) , (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 1)
+                cv2.putText(imgResult, str(angle) , (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 1)
 
 
 
