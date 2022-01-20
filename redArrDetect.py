@@ -23,7 +23,7 @@ def getAngle(gradient):
     angD = round(math.degrees(angR))
     ang = (90-angD)
     if ang < 0:
-        ang+= 360
+        ang+= 180
     return ang
 
 # This function segments the color of the arrow and detects it
@@ -41,29 +41,31 @@ def getContours(img):
     for cnt in contours:
         area = cv2.contourArea(cnt)
         # print(area)
-        if area > 500:
-            cv2.drawContours(imgResult, cnt, -1, (255, 0, 0), 3)
-            peri = cv2.arcLength(cnt, True)
-            # print(peri)
-            approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
-            # pts = approx
-            print(approx)
-            objCor = len(approx)
-            x, y, w, h = cv2.boundingRect(approx)
-            # print(objCor)
-            cv2.rectangle(imgResult, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            if objCor == 7:
-                # if len(approx[0])==2:
-                    x1, y1 = approx[0][0]
-                    x2, y2 = approx[3][0]
-                    x3, y3 = approx[4][0]
-                    x4 = ((x2 + x3)/2)
-                    y4 = ((y2 + y3)/2)
-                    print(x1, y1, x4, y4)
-                    gradient = getGradient(x1, y1, x4, y4)
-                    angle = getAngle(gradient)
+        peri = cv2.arcLength(cnt, True)
+        # print(peri)
+        approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
+        # pts = approx
+        print(approx)
+        objCor = len(approx)
+        if objCor == 7:
+            if area > 3000:
+                cv2.drawContours(imgResult, cnt, -1, (255, 0, 0), 3)
 
-                    cv2.putText(imgResult, str(angle) , (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 1)
+                x, y, w, h = cv2.boundingRect(approx)
+                # print(objCor)
+                cv2.rectangle(imgResult, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                # if objCor == 7:
+                    # if len(approx[0])==2:
+                        x1, y1 = approx[0][0]
+                        x2, y2 = approx[3][0]
+                        x3, y3 = approx[4][0]
+                        x4 = ((x2 + x3)/2)
+                        y4 = ((y2 + y3)/2)
+                        print(x1, y1, x4, y4)
+                        gradient = getGradient(x1, y1, x4, y4)
+                        angle = getAngle(gradient)
+
+                        cv2.putText(imgResult, str(angle) , (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 1)
 
 
 while True:
